@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denrlen Restaurant & Bookstore | NBC Ikuti, Mbeya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        amberCustom: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                            950: '#451a03',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .font-serif { font-family: 'Playfair Display', serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #d97706; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b45309; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Hidden / Collapsible Sidebar Navigation Drawer -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-stone-900 text-stone-100 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl border-r border-stone-800">
+        <div class="p-6 border-b border-stone-800 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center text-white font-serif font-bold text-xl shadow-lg">
+                    D
+                </div>
+                <div>
+                    <h1 class="font-serif text-lg font-bold tracking-wide text-amber-500">DENRLEN</h1>
+                    <p class="text-xs text-stone-400 tracking-wider uppercase">Restaurant & Books</p>
+                </div>
+            </div>
+            <button onclick="toggleSidebar()" class="text-stone-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="#home" onclick="closeSidebar()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-stone-300 hover:bg-stone-800 hover:text-amber-400 transition group font-medium">
+                <i class="fa-solid fa-house w-6 text-center text-amber-500 group-hover:scale-110 transition-transform"></i>
+                <span>Home</span>
+            </a>
+            <a href="#menu" onclick="closeSidebar()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-stone-300 hover:bg-stone-800 hover:text-amber-400 transition group font-medium">
+                <i class="fa-solid fa-utensils w-6 text-center text-amber-500 group-hover:scale-110 transition-transform"></i>
+                <span>Restaurant Menu</span>
+            </a>
+            <a href="#books" onclick="closeSidebar()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-stone-300 hover:bg-stone-800 hover:text-amber-400 transition group font-medium">
+                <i class="fa-solid fa-book-open w-6 text-center text-amber-500 group-hover:scale-110 transition-transform"></i>
+                <span>Bookstore</span>
+            </a>
+            <a href="#about" onclick="closeSidebar()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-stone-300 hover:bg-stone-800 hover:text-amber-400 transition group font-medium">
+                <i class="fa-solid fa-circle-info w-6 text-center text-amber-500 group-hover:scale-110 transition-transform"></i>
+                <span>About Us</span>
+            </a>
+            <a href="#location" onclick="closeSidebar()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-stone-300 hover:bg-stone-800 hover:text-amber-400 transition group font-medium">
+                <i class="fa-solid fa-map-location-dot w-6 text-center text-amber-500 group-hover:scale-110 transition-transform"></i>
+                <span>Location & Contact</span>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-stone-800 bg-stone-950/50">
+            <div class="bg-stone-900 rounded-xl p-4 border border-stone-800 text-xs text-stone-300 space-y-2">
+                <p class="font-semibold text-amber-400 flex items-center space-x-2">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>NBC Ikuti, Mbeya</span>
+                </p>
+                <p class="text-stone-400 flex items-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                    <span>+255 796 906 117</span>
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Backdrop Overlay for Hidden Sidebar -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-stone-950/60 backdrop-blur-xs z-40 hidden transition-opacity"></div>
+
+    <!-- Main Wrapper -->
+    <div class="flex-1 flex flex-col min-h-screen w-full">
+        <!-- Top Navbar with Menu Toggle Button -->
+        <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-stone-200 px-4 lg:px-8 py-4 flex items-center justify-between shadow-xs">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleSidebar()" class="text-stone-700 hover:text-amber-600 focus:outline-none p-2 rounded-lg hover:bg-stone-100 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                    <span class="text-sm font-semibold hidden sm:inline">Menu</span>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full border border-amber-200 flex items-center space-x-1">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="hidden sm:inline">Sat–Thu (19:00 - 21:00) at </span><span>NBC Ikuti, Mbeya</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://wa.me/255796906117?text=Hello%20Denrlen%20Restaurant,%20I%20would%20like%20to%20inquire%20about..." target="_blank" class="hidden sm:inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>WhatsApp Direct</span>
+                </a>
+                
+                <button onclick="toggleCartModal()" class="relative bg-amber-600 hover:bg-amber-700 text-white p-2.5 rounded-xl shadow-md transition flex items-center justify-center">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-rose-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 w-full">
+            <!-- Hero Section -->
+            <section id="home" class="relative bg-stone-900 text-white overflow-hidden py-20 lg:py-28 px-4 lg:px-12 flex items-center">
+                <div class="absolute inset-0 z-0 opacity-40">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop" alt="Delicious Food Background" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/80 to-transparent z-1"></div>
+
+                <div class="relative z-10 max-w-3xl space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-amber-500/20 border border-amber-500/30 px-3.5 py-1.5 rounded-full text-amber-300 text-sm font-medium backdrop-blur-sm">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>NBC Ikuti - Mbeya, Tanzania</span>
+                    </div>
+                    <h1 class="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
+                        Exquisite Flavors & <span class="text-amber-500 underline decoration-amber-500/50 underline-offset-8">Inspiring Books</span>
+                    </h1>
+                    <p class="text-stone-300 text-base sm:text-xl font-light leading-relaxed max-w-2xl">
+                        Welcome to <strong class="text-white font-semibold">Denrlen Restaurant</strong>. Savor authentic local Tanzanian snacks, fresh milk, refreshing juices, and explore our bookstore. Click any item picture to view full details!
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#menu" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center space-x-2">
+                            <i class="fa-solid fa-utensils"></i>
+                            <span>Explore Menu</span>
+                        </a>
+                        <a href="#books" class="bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 font-semibold px-6 py-3.5 rounded-xl transition flex items-center space-x-2">
+                            <i class="fa-solid fa-book-open text-amber-500"></i>
+                            <span>Browse Books</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Restaurant Menu Section -->
+            <section id="menu" class="py-16 px-4 lg:px-12 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                    <span class="text-amber-600 font-semibold text-sm uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Culinary Delights</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">Our Restaurant Menu</h2>
+                    <p class="text-stone-600 text-sm sm:text-base">Click any food or drink image to view details, ingredients, and order.</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10" id="menuCategoryFilters">
+                    <button onclick="filterMenu('all', this)" class="menu-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-amber-600 text-white shadow-sm">All Items</button>
+                    <button onclick="filterMenu('local', this)" class="menu-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200">Local Dishes</button>
+                    <button onclick="filterMenu('drinks', this)" class="menu-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200">Drinks & Juices</button>
+                </div>
+
+                <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"></div>
+            </section>
+
+            <!-- Bookstore Section -->
+            <section id="books" class="py-16 px-4 lg:px-12 bg-stone-100 border-y border-stone-200">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                        <span class="text-amber-600 font-semibold text-sm uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Knowledge Hub</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">Denrlen Bookstore</h2>
+                        <p class="text-stone-600 text-sm sm:text-base">Click any book cover image to view summary, author, and purchase options.</p>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10" id="bookCategoryFilters">
+                        <button onclick="filterBooks('all', this)" class="book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-amber-600 text-white shadow-sm">All Books</button>
+                        <button onclick="filterBooks('business', this)" class="book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200">Business</button>
+                        <button onclick="filterBooks('motivation', this)" class="book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200">Motivation</button>
+                        <button onclick="filterBooks('swahili', this)" class="book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200">Swahili</button>
+                        <button onclick="filterBooks('religious', this)" class="book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200">Religious</button>
+                    </div>
+
+                    <div id="booksGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"></div>
+                </div>
+            </section>
+
+            <!-- About Us Section -->
+            <section id="about" class="py-16 px-4 lg:px-12 max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <span class="text-amber-600 font-semibold text-sm uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Our Story</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 leading-tight">
+                            Welcome to Denrlen Restaurant & Bookstore at NBC Ikuti
+                        </h2>
+                        <p class="text-stone-600 leading-relaxed text-sm sm:text-base">
+                            Located conveniently at <strong class="text-stone-800">NBC Ikuti in Mbeya, Tanzania</strong>, Denrlen is more than just a place to eat—it's a vibrant community hub where great food meets great minds. We pride ourselves on authentic local recipes, high hygiene standards, friendly customer service, and an inspiring selection of books.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
+                                <h3 class="font-bold text-amber-900 text-xl font-serif">100%</h3>
+                                <p class="text-xs text-amber-800/80">Fresh Local Ingredients</p>
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
+                                <h3 class="font-bold text-amber-900 text-xl font-serif">Fast WhatsApp</h3>
+                                <p class="text-xs text-amber-800/80">Order & Delivery Support</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -inset-2 bg-amber-500 rounded-3xl opacity-20 blur-xl"></div>
+                        <div class="relative bg-stone-900 rounded-3xl overflow-hidden shadow-2xl border border-stone-800">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop" alt="Restaurant Interior" class="w-full h-80 sm:h-96 object-cover opacity-90">
+                            <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6 text-white">
+                                <p class="font-serif text-lg font-bold text-amber-400">Denrlen Hospitality</p>
+                                <p class="text-xs text-stone-300">Serving Mbeya residents with delicious meals and empowering literature.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location & Contact Section -->
+            <section id="location" class="py-16 px-4 lg:px-12 bg-stone-900 text-white">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                        <span class="text-amber-400 font-semibold text-sm uppercase tracking-widest bg-amber-500/20 px-3 py-1 rounded-full">Visit Us</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">Location & Contact Details</h2>
+                        <p class="text-stone-400 text-sm sm:text-base">We are easy to find and always ready to serve you.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-stone-800/80 border border-stone-700 p-8 rounded-2xl text-center space-y-4 hover:border-amber-500 transition shadow-lg">
+                            <div class="w-14 h-14 bg-amber-600/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-amber-500/30">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold">Our Location</h3>
+                            <p class="text-stone-300 text-sm leading-relaxed">
+                                NBC Ikuti, Mbeya Region<br>Tanzania
+                            </p>
+                            <span class="inline-block text-xs bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full">Easy Access Point</span>
+                        </div>
+
+                        <div class="bg-stone-800/80 border border-stone-700 p-8 rounded-2xl text-center space-y-4 hover:border-amber-500 transition shadow-lg">
+                            <div class="w-14 h-14 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-emerald-500/30">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold">WhatsApp Orders</h3>
+                            <p class="text-stone-300 text-sm leading-relaxed">
+                                Send us your order directly:<br>
+                                <strong class="text-emerald-400 text-base">+255 796 906 117</strong>
+                            </p>
+                            <a href="https://wa.me/255796906117?text=Hello%20Denrlen%20Restaurant," target="_blank" class="inline-block text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-xl transition">Chat on WhatsApp</a>
+                        </div>
+
+                        <div class="bg-stone-800/80 border border-stone-700 p-8 rounded-2xl text-center space-y-4 hover:border-amber-500 transition shadow-lg">
+                            <div class="w-14 h-14 bg-amber-600/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-amber-500/30">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold">Opening Hours</h3>
+                            <p class="text-stone-300 text-sm leading-relaxed">
+                                Saturday – Thursday:<br>
+                                <strong class="text-white">19:00 – 21:00</strong><br>
+                                <span class="text-xs text-amber-400">Friday: Closed</span>
+                            </p>
+                            <span class="inline-block text-xs bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full">Evening Service</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="bg-stone-950 text-stone-400 py-10 px-4 lg:px-12 border-t border-stone-800">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center text-white font-serif font-bold text-xl">
+                            D
+                        </div>
+                        <div>
+                            <p class="font-serif text-white font-bold text-lg">Denrlen Restaurant & Bookstore</p>
+                            <p class="text-xs text-stone-500">&copy; 2026 Denrlen. NBC Ikuti, Mbeya, Tanzania.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-6 text-sm">
+                        <a href="#home" class="hover:text-amber-400 transition">Home</a>
+                        <a href="#menu" class="hover:text-amber-400 transition">Menu</a>
+                        <a href="#books" class="hover:text-amber-400 transition">Books</a>
+                        <a href="#about" class="hover:text-amber-400 transition">About Us</a>
+                        <a href="#location" class="hover:text-amber-400 transition">Contact</a>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Quick View / Details Modal -->
+    <div id="detailModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-stone-950/75 backdrop-blur-xs" onclick="closeDetailModal()"></div>
+
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div class="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-stone-200 w-full">
+                <div class="relative h-64 sm:h-72 bg-stone-100">
+                    <img id="modalImg" src="" alt="Item Image" class="w-full h-full object-cover">
+                    <button onclick="closeDetailModal()" class="absolute top-4 right-4 bg-stone-900/80 hover:bg-stone-900 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                    <span id="modalBadge" class="absolute bottom-4 left-4 bg-amber-600 text-white font-bold text-sm px-4 py-1.5 rounded-full shadow-md"></span>
+                </div>
+                
+                <div class="p-6 sm:p-8 space-y-4">
+                    <div>
+                        <span id="modalCategory" class="text-xs font-semibold text-amber-600 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full"></span>
+                        <h3 id="modalTitle" class="font-serif text-2xl font-bold text-stone-900 mt-2"></h3>
+                        <p id="modalAuthorOrSub" class="text-sm font-medium text-stone-500 mt-0.5"></p>
+                    </div>
+
+                    <div class="border-t border-stone-100 pt-4">
+                        <h4 class="text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Description</h4>
+                        <p id="modalDesc" class="text-stone-600 text-sm leading-relaxed"></p>
+                    </div>
+
+                    <div class="border-t border-stone-100 pt-4 flex gap-4">
+                        <button onclick="addModalItemToCart()" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-6 rounded-xl transition shadow-md flex items-center justify-center space-x-2 text-sm">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span id="modalAddBtnText">Add to order</span>
+                        </button>
+                        <button onclick="closeDetailModal()" class="bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold py-3 px-4 rounded-xl transition text-sm">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal / Drawer -->
+    <div id="cartModal" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-stone-950/70 backdrop-blur-xs transition-opacity" onclick="toggleCartModal()"></div>
+
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                <div class="p-6 bg-stone-900 text-white flex items-center justify-between border-b border-stone-800">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-cart-shopping text-amber-500 text-xl"></i>
+                        <h2 class="font-serif text-lg font-bold">Your Order Cart</h2>
+                    </div>
+                    <button onclick="toggleCartModal()" class="text-stone-400 hover:text-white p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cartItemsContainer"></div>
+
+                <div class="p-6 bg-stone-50 border-t border-stone-200 space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm text-stone-600">
+                            <span>Subtotal</span>
+                            <span id="cartSubtotal" class="font-semibold text-stone-900">TZS 0</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-stone-600">
+                            <span>Delivery / Pickup</span>
+                            <span class="text-amber-600 font-medium">NBC Ikuti / Mbeya Town</span>
+                        </div>
+                        <div class="border-t border-stone-200 pt-2 flex justify-between text-base font-bold text-stone-900">
+                            <span>Total Amount</span>
+                            <span id="cartTotal" class="text-amber-700">TZS 0</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-xs font-semibold text-stone-700 uppercase tracking-wide">Your Name / Delivery Info</label>
+                        <input type="text" id="customerNameInput" placeholder="e.g., John Mwakyusa (NBC Ikuti)" class="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                    </div>
+
+                    <button onclick="checkoutViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg transition flex items-center justify-center space-x-2 text-base">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        <span>Order via WhatsApp (+255 796 906 117)</span>
+                    </button>
+                    <p class="text-center text-xs text-stone-500">Clicking will open WhatsApp with your itemized order list.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-5 py-3 rounded-2xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center space-x-3 border border-stone-800">
+        <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white text-sm">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <p id="toastTitle" class="font-semibold text-sm">Added to Cart!</p>
+            <p id="toastMessage" class="text-xs text-stone-400">Item successfully added to your order list.</p>
+        </div>
+    </div>
+
+    <script>
+        // Data Store for Restaurant Menu & Bookstore
+        const menuItems = [
+            { id: 'm1', name: 'Crispy Samosa Snack', category: 'local', price: 500, desc: 'Samosa za nyama au mboga - Crispy, golden-brown pastry triangles filled with seasoned minced meat or vegetables. Freshly fried and delicious.', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=600&auto=format&fit=crop' },
+            { id: 'm2', name: 'Coconut Rice Cakes (Vitumbua)', category: 'local', price: 500, desc: 'Vitumbua vya nazi - Soft, fluffy traditional rice and coconut cakes baked to golden perfection. Best enjoyed with tea or coffee.', img: 'https://images.openai.com/static-rsc-4/Vv8w-aUsSyqI2h3UiNkd3O1YvL42ZIrLMkY9UERjWxYGFQMgsn4wnIvc5ogvhWbCcYGfkE4-FMGF5mNNHwR4r0Cm7RX-kDiQWAvkqcQi8m2rPG_1u96OiQ0CzpPfDrBSyM0m-xQY_2pkqN8YxsLId6MmSwzeRkhn1xPHNtmvJdTcftan2fcCMw4dcpDAp4gq?purpose=fullsize' },
+            { id: 'm3', name: 'Milk & Egg Chapatis', category: 'local', price: 500, desc: 'Chapati za mayai na maziwa - Rich, layered soft chapatis enriched with fresh milk and eggs for extra tenderness and flavor.', img: 'https://images.openai.com/static-rsc-4/TNJJVBWMBlBeA0_1-1pk0ilvx30TWnIXmJc8molgKpnPR_p3bewiym_w7pJgMHxOM11Hn35er6ldFlAIgDL043Yh_0S9gsKeUctchzLz22LveUCdCpldyTM0eLEjHwcas8XHVKj-PWc3ZTJ2HKAwcsSlp0GMUqajhcNc0iOkx3U4vNAiHMsQ2jILvZj8OSVw?purpose=fullsize' },
+            { id: 'm4', name: 'Egg-Coated Peanuts', category: 'local', price: 500, desc: 'Karanga za mayai - Crispy, crunchy roasted peanuts coated in seasoned egg batter. A favorite snack for everyone.', img: 'https://images.openai.com/static-rsc-4/xjmtobR7vuoPYMtEWKmb5GfpS6os8ZNU69AY5HYgtpaq6e3TZ904gqpx73rC_a1L0GkYIax_ZJJnWzEIKEoCtTlChYZNFcB4Tw8vB3W_NOIpwvnk41YWAacwGAYqLOICzbS-0QQTygbo8uQ3faoVo2iX3yPAPpbPH9qlshp9LEdUcdPwscRj_ihrIy9ZFWoY?purpose=fullsize' },
+            { id: 'm5', name: 'Viazi Karai / Fried Cassava', category: 'local', price: 1000, desc: 'Spiced crispy fried potato cubes or cassava chunks coated in yellow batter, served with spicy chutneys.', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=600&auto=format&fit=crop' },
+            { id: 'm6', name: 'Fresh Milk (1.6L)', category: 'drinks', price: 2500, desc: 'Maziwa safi ya ngombe (Lita 1.6) - Pure, rich, and pasteurized fresh milk sourced directly from local farms.', img: 'https://tse4.mm.bing.net/th/id/OIP.BO0u3L-vfUzV150IQAecSAHaFh?r=0&pid=ImgDet&w=205&h=153&c=7&dpr=1.5&o=7&rm=3' },
+            { id: 'm7', name: 'Fresh Milk (1L)', category: 'drinks', price: 1800, desc: 'Maziwa safi ya ngombe (Lita 1) - Pure, wholesome farm-fresh milk ready for your tea, coffee, or direct consumption.', img: 'https://tse4.mm.bing.net/th/id/OIP.BO0u3L-vfUzV150IQAecSAHaFh?r=0&pid=ImgDet&w=205&h=153&c=7&dpr=1.5&o=7&rm=3' },
+            { id: 'm8', name: 'Avocado Juice', category: 'drinks', price: 500, desc: 'Juisi ya parachichi - Smooth, refreshing, and creamy fresh avocado juice blended to perfection.', img: 'https://recipesbycassie.com/wp-content/uploads/2025/09/6Avocado-Smoothie.jpeg' },
+            { id: 'm9', name: 'Passion Juice', category: 'drinks', price: 500, desc: 'Juisi ya passion - Tangy, sweet, and bursting with tropical passion fruit flavor to quench your thirst.', img: 'https://www.thelittleepicurean.com/wp-content/uploads/2021/03/passion-fruit-juice-13.jpg' }
+        ];
+
+        const booksData = [
+            { id: 'b1', name: 'HOW TO REACH FINANCIAL FREEDOM', category: 'business', price: 15000, author: 'Mr. POcanny', desc: 'A practical financial guide to help you build wealth, achieve financial independence, and secure your future.', img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=600&auto=format&fit=crop' },
+            { id: 'b2', name: 'THE MINDSET', category: 'motivation', price: 12000, author: 'Mr. POcanny', desc: 'You become who you think. Learn how your cycle and daily thoughts shape your ultimate reality and success.', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=600&auto=format&fit=crop' },
+            { id: 'b3', name: 'Hisa, Akiba na Uwekezaji', category: 'swahili', price: 10000, author: 'Mr. POcanny', desc: 'Jifunze maana ya hisa, wekeza na kuwa kiuchumi. Mwongozo mzuri wa kuelewa masoko ya hisa na uwekezaji kwa Kiswahili.', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop' },
+            { id: 'b4', name: 'The Mind of Marriage', category: 'religious', price: 14000, author: 'Mr. POcanny', desc: 'A profound spiritual and relational guide exploring the divine purpose, commitment, and harmony within marriage.', img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600&auto=format&fit=crop' }
+        ];
+
+        let cart = [];
+        let currentModalItem = null;
+
+        // Render Menu Items
+        function renderMenu(category = 'all') {
+            const grid = document.getElementById('menuGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            
+            const filtered = category === 'all' ? menuItems : menuItems.filter(item => item.category === category);
+            
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition border border-stone-200 flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div class="relative h-52 overflow-hidden cursor-pointer bg-stone-100" onclick="openDetailModal('${item.id}', 'menu')">
+                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 bg-amber-600 text-white font-bold text-xs px-3 py-1 rounded-full shadow-md">TZS ${item.price.toLocaleString()}</span>
+                        <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <span class="bg-white/90 text-stone-900 font-semibold text-xs px-3.5 py-2 rounded-xl shadow-lg flex items-center space-x-1.5">
+                                <i class="fa-solid fa-eye text-amber-600"></i>
+                                <span>View Details</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs font-semibold text-amber-600 uppercase tracking-widest">${item.category}</span>
+                            <h3 class="font-serif text-xl font-bold text-stone-900 mt-1 cursor-pointer hover:text-amber-600 transition" onclick="openDetailModal('${item.id}', 'menu')">${item.name}</h3>
+                            <p class="text-stone-600 text-sm mt-2 line-clamp-2">${item.desc}</p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <span class="font-bold text-stone-950">TZS ${item.price.toLocaleString()}</span>
+                            <button onclick="addToCart('${item.id}', 'menu')" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition flex items-center space-x-2">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span>Add to order</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Books
+        function renderBooks(category = 'all') {
+            const grid = document.getElementById('booksGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            
+            const filtered = category === 'all' ? booksData : booksData.filter(item => item.category === category);
+            
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition border border-stone-200 flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div class="relative h-64 overflow-hidden cursor-pointer bg-stone-100" onclick="openDetailModal('${item.id}', 'book')">
+                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 bg-amber-600 text-white font-bold text-xs px-3 py-1 rounded-full shadow-md">TZS ${item.price.toLocaleString()}</span>
+                        <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <span class="bg-white/90 text-stone-900 font-semibold text-xs px-3.5 py-2 rounded-xl shadow-lg flex items-center space-x-1.5">
+                                <i class="fa-solid fa-eye text-amber-600"></i>
+                                <span>View Summary</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs font-semibold text-amber-600 uppercase tracking-widest">${item.category}</span>
+                            <h3 class="font-serif text-lg font-bold text-stone-900 mt-1 cursor-pointer hover:text-amber-600 transition" onclick="openDetailModal('${item.id}', 'book')">${item.name}</h3>
+                            <p class="text-xs font-medium text-stone-500 mt-0.5">By ${item.author}</p>
+                            <p class="text-stone-600 text-sm mt-2 line-clamp-2">${item.desc}</p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <span class="font-bold text-stone-950">TZS ${item.price.toLocaleString()}</span>
+                            <button onclick="addToCart('${item.id}', 'book')" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition flex items-center space-x-2">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span>Add book</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Handlers with Active Button Styling
+        function filterMenu(category, btnElement) {
+            document.querySelectorAll('.menu-filter-btn').forEach(btn => {
+                btn.className = 'menu-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200';
+            });
+            if(btnElement) {
+                btnElement.className = 'menu-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-amber-600 text-white shadow-sm';
+            }
+            renderMenu(category);
+        }
+
+        function filterBooks(category, btnElement) {
+            document.querySelectorAll('.book-filter-btn').forEach(btn => {
+                btn.className = 'book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-white text-stone-700 hover:bg-stone-100 border border-stone-200';
+            });
+            if(btnElement) {
+                btnElement.className = 'book-filter-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-sm transition bg-amber-600 text-white shadow-sm';
+            }
+            renderBooks(category);
+        }
+
+        // Toggle Hidden Sidebar & Backdrop
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if(sidebar) sidebar.classList.toggle('-translate-x-full');
+            if(backdrop) backdrop.classList.toggle('hidden');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if(sidebar) sidebar.classList.add('-translate-x-full');
+            if(backdrop) backdrop.classList.add('hidden');
+        }
+
+        // Modal Handlers
+        function openDetailModal(id, type) {
+            const item = type === 'menu' ? menuItems.find(m => m.id === id) : booksData.find(b => b.id === id);
+            if (!item) return;
+
+            currentModalItem = { ...item, type };
+
+            document.getElementById('modalImg').src = item.img;
+            document.getElementById('modalBadge').innerText = `TZS ${item.price.toLocaleString()}`;
+            document.getElementById('modalCategory').innerText = item.category;
+            document.getElementById('modalTitle').innerText = item.name;
+            document.getElementById('modalAuthorOrSub').innerText = type === 'book' ? `Author: ${item.author}` : 'Denrlen Restaurant Fresh Kitchen';
+            document.getElementById('modalDesc').innerText = item.desc;
+            document.getElementById('modalAddBtnText').innerText = type === 'book' ? 'Add book to order' : 'Add to order';
+
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+            currentModalItem = null;
+        }
+
+        function addModalItemToCart() {
+            if (currentModalItem) {
+                addToCart(currentModalItem.id, currentModalItem.type);
+                closeDetailModal();
+            }
+        }
+
+        // Cart Drawer
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            if(!modal) return;
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                renderCartItems();
+            }
+        }
+
+        function addToCart(id, type) {
+            const item = type === 'menu' ? menuItems.find(m => m.id === id) : booksData.find(b => b.id === id);
+            if (!item) return;
+
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1, itemType: type });
+            }
+
+            updateCartBadge();
+            showToast("Added to Order", `${item.name} has been added to your cart.`);
+        }
+
+        function updateCartQty(id, change) {
+            const index = cart.findIndex(c => c.id === id);
+            if (index !== -1) {
+                cart[index].qty += change;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+                updateCartBadge();
+                renderCartItems();
+            }
+        }
+
+        function updateCartBadge() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const badge = document.getElementById('cartBadge');
+            if(badge) badge.innerText = totalQty;
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsContainer');
+            if(!container) return;
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-stone-300"></i>
+                        <p class="text-stone-500 font-medium">Your cart is empty.</p>
+                        <p class="text-xs text-stone-400">Select food items or books from our menu.</p>
+                    </div>
+                `;
+                document.getElementById('cartSubtotal').innerText = 'TZS 0';
+                document.getElementById('cartTotal').innerText = 'TZS 0';
+                return;
+            }
+
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-stone-50 p-4 rounded-2xl border border-stone-200';
+                div.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <img src="${item.img}" alt="${item.name}" class="w-14 h-14 object-cover rounded-xl">
+                        <div>
+                            <h4 class="font-serif font-bold text-stone-900 text-sm">${item.name}</h4>
+                            <p class="text-xs text-stone-500">TZS ${item.price.toLocaleString()} each</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="flex items-center space-x-2 bg-white border border-stone-200 rounded-xl px-2 py-1">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="text-stone-500 hover:text-stone-900 px-1"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span class="text-sm font-bold text-stone-900 w-5 text-center">${item.qty}</span>
+                            <button onclick="updateCartQty('${item.id}', 1)" class="text-stone-500 hover:text-stone-900 px-1"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('cartSubtotal').innerText = `TZS ${subtotal.toLocaleString()}`;
+            document.getElementById('cartTotal').innerText = `TZS ${subtotal.toLocaleString()}`;
+        }
+
+        // WhatsApp Checkout
+        function checkoutViaWhatsApp() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items first.');
+                return;
+            }
+
+            const customerNameInput = document.getElementById('customerNameInput');
+            const customerName = customerNameInput ? customerNameInput.value.trim() || 'Denrlen Customer' : 'Denrlen Customer';
+            let total = 0;
+
+            let message = `Hello Denrlen Restaurant & Bookstore,%0AI would like to place the following order (NBC Ikuti, Mbeya):%0A%0A`;
+            message += `Customer Name: *${encodeURIComponent(customerName)}*%0A%0A`;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                message += `${index + 1}. *${encodeURIComponent(item.name)}* x ${item.qty} = TZS ${itemTotal.toLocaleString()}%0A`;
+            });
+
+            message += `%0ATotal Amount: *TZS ${total.toLocaleString()}*%0A%0APlease confirm this order and provide pickup/payment details. Thank you!`;
+
+            const whatsappUrl = `https://wa.me/255796906117?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Toast Notification
+        function showToast(title, message) {
+            const toast = document.getElementById('toastNotification');
+            if(!toast) return;
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMenu('all');
+            renderBooks('all');
+        });
+    </script>
+</body>
+</html>
